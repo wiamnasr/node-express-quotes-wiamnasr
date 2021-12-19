@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Quotes, Quote } from "./App.styles";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState({
@@ -28,11 +29,18 @@ const App = () => {
       {isLoading.loading || !isLoading.quotes ? (
         <div>loading...</div>
       ) : (
-        <ul>
+        <Quotes>
           {isLoading.quotes.map((quote, index) => {
-            return <li key={index}>{quote.quote}</li>;
+            return (
+              <Quote key={index} className='quote'>
+                {quote.quote}
+                <br />
+                <br />
+                {quote.author}
+              </Quote>
+            );
           })}
-        </ul>
+        </Quotes>
       )}
     </div>
   );
