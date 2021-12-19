@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+const App = () => {
+  const [isLoading, setIsLoading] = useState({
+    loading: true,
+    quotes: null,
+  });
+
+  async function componentDidMount() {
+    console.log("going to fetch");
+    if (isLoading.loading) {
+      let headers = new Headers();
+      const url = "https://wiamnasr-quote-server.glitch.me/quotes";
+      const options = { method: "GET", headers: headers };
+      const response = await fetch(url, options);
+      const data = await response.json();
+      const { quotes } = data;
+      return setIsLoading({
+        loading: false,
+        quotes: quotes,
+      });
+    }
+  }
+
+  componentDidMount();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {isLoading.loading || !isLoading.quotes ? (
+        <div>loading...</div>
+      ) : (
+        <ul>
+          {isLoading.quotes.map((quote, index) => {
+            return <li key={index}>{quote.quote}</li>;
+          })}
+        </ul>
+      )}
     </div>
   );
-}
+};
 
 export default App;
