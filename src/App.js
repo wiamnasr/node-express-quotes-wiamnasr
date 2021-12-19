@@ -32,7 +32,7 @@ const App = () => {
         <Quotes>
           {isLoading.quotes.map((quote, index) => {
             return (
-              <Quote key={index} className='quote'>
+              <Quote key={index}>
                 {quote.quote}
                 <br />
                 <br />
